@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Rutina extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'foto',
+        'nivel_dificultad',
+    ];
 }

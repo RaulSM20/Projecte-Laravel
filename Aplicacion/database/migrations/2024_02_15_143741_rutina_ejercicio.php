@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('rutina_ejercicio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rutina_id');
-            $table->foreignId('ejercicio_id');
+            $table->foreignId('rutina_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ejercicio_id')->constrained()->onDelete('cascade');
             $table->integer('numero_series');
             $table->integer('numero_repeticiones');
             $table->integer('rir');

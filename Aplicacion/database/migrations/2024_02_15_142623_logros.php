@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('logros', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('descripcion');
             $table->date('fecha');
             $table->timestamps();

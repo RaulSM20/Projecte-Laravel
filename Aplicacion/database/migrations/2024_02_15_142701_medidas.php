@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('medidas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('fecha');
             $table->string('peso');
             $table->timestamps();

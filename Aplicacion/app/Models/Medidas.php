@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Medidas extends Model
 {
     use HasFactory;
+
+    
+    protected $fillable = [
+        'user_id',
+        'fecha',
+        'peso',
+    ];
+
+    
+    public function usuario()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

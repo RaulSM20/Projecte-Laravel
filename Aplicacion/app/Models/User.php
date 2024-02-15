@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol_id'
     ];
 
     /**
@@ -42,4 +43,37 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function rol()
+    {
+        return $this->belongsTo(Roles::class);
+    }
+    public function entrenamientos()
+    {
+        return $this->hasMany(Entrenamiento::class);
+    }
+
+    /**
+     * Get the medidas for the user.
+     */
+    public function medidas()
+    {
+        return $this->hasMany(Medidas::class);
+    }
+
+    /**
+     * Get the logros for the user.
+     */
+    public function logros()
+    {
+        return $this->hasMany(Logros::class);
+    }
+
+    /**
+     * Get the retos that the user participates in.
+     */
+    public function retos()
+    {
+        return $this->belongsToMany(Retos::class);
+    }
 }
