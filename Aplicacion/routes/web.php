@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\EjercicioController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RutinaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +22,20 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'role:admin'])->name('dashboard');
+Route::get('/welcome', function () {
+    return view('welcome');
+})->middleware('auth')->name('welcome');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('/dashboard/rutinas', RutinaController::class);
+Route::resource('/dashboard/ejercicios', EjercicioController::class);
+
+
 
 require __DIR__.'/auth.php';
