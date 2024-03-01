@@ -13,6 +13,9 @@ class RutinaController extends Controller
     public function index()
     {
         //
+        $rutinas = Rutina::all();
+
+        return view('mostrarRutinas', ['rutinas' => $rutinas]);
     }
 
     /**
@@ -42,9 +45,10 @@ class RutinaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Rutina $rutina)
     {
-        //
+
+       return $rutina;
     }
 
     /**

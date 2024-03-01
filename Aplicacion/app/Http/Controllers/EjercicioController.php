@@ -12,7 +12,8 @@ class EjercicioController extends Controller
      */
     public function index()
     {
-        //
+        return view('mostrarEjercicios');
+
     }
 
     /**

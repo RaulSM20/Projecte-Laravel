@@ -3,6 +3,7 @@
 use App\Http\Controllers\EjercicioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RutinaController;
+use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Roles 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'role:admin'])->name('dashboard');
+
 Route::get('/welcome', function () {
     return view('welcome');
 })->middleware('auth')->name('welcome');
@@ -33,8 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// mostrar listados del dashboard
+Route::get('/dashboard/usuarios', [usuarioController::class, 'show']);
+////
 Route::resource('/dashboard/rutinas', RutinaController::class);
 Route::resource('/dashboard/ejercicios', EjercicioController::class);
+
+
 
 
 
