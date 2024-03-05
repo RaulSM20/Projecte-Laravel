@@ -12,7 +12,10 @@ class EjercicioController extends Controller
      */
     public function index()
     {
-        return view('mostrarEjercicios');
+
+        $ejercicios = Ejercicio::all();
+
+        return view('mostrarEjercicios', ['ejercicios' => $ejercicios]);
 
     }
 
@@ -43,9 +46,9 @@ class EjercicioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ejercicio $ejercicio)
     {
-        //
+        return $ejercicio;
     }
 
     /**

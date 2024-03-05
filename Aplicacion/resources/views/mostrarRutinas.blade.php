@@ -52,7 +52,7 @@
                                             {{ $r->descripcion }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $r->foto }}
+                                            <img src="{{ url($r->foto) }}" alt="foto" class="max-w-10" style="max-width: 120px;">
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $r->nivel_dificultad }}
