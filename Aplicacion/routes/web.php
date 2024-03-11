@@ -6,41 +6,37 @@ use App\Http\Controllers\RutinaController;
 use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
-// Roles 
+// Roles dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'role:admin'])->name('dashboard');
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    if (auth()->user()->hasRole('admin')) {
+        return view('dashboard');
+    } else {
+        return view('welcome'); //TODO TE TIENE QUE LLEVAR AL FRONT
+    }
 })->middleware('auth')->name('welcome');
 
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->middleware(['auth', 'role:admin'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->middleware(['auth', 'role:admin'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware(['auth', 'role:admin'])->name('profile.destroy');
 });
 
 // mostrar listados del dashboard
 Route::get('/dashboard/usuarios', [usuarioController::class, 'show']);
-////
-Route::resource('/dashboard/rutinas', RutinaController::class);
-Route::resource('/dashboard/ejercicios', EjercicioController::class);
+
+// CRUD
+Route::resource('/dashboard/rutinas', RutinaController::class)->middleware(['auth', 'role:admin']);
+Route::resource('/dashboard/ejercicios', EjercicioController::class)->middleware(['auth', 'role:admin']);
 
 
 
