@@ -20,12 +20,12 @@
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
-                                        Descripcion
+                                            Descripcion
                                         </div>
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
-                                        Foto
+                                            Foto
 
                                         </div>
                                     </th>
@@ -52,15 +52,25 @@
                                             {{ $r->descripcion }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <img src="{{ url($r->foto) }}" alt="foto" class="max-w-10" style="max-width: 120px;">
+                                            <img src="{{ url($r->foto) }}" alt="foto" class="max-w-10"
+                                                style="max-width: 120px;">
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $r->grupos_musculares }}
                                         </td>
 
                                         <td class="px-6 py-4 text-right">
-                                            <a href="#"
+                                            <a href="{{ route('ejercicios.edit', ['ejercicio' => $r]) }}"
                                                 class="font-medium text-blue-600 hover:text-blue-700">Edit</a>
+                                            <form
+                                                action="{{ route('ejercicios.destroy', ['ejercicio' => $r]) }}"
+                                                method="POST" class="inline"
+                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ejercicio?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="font-medium text-red-600 hover:text-red-700 ml-2">Eliminar</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

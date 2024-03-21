@@ -32,7 +32,42 @@ class EjercicioSeeder extends Seeder
                 'foto' => 'dominadas.jpg',
                 'grupos_musculares' => 'Espalda, brazos'
             ],
-            // Agrega más ejercicios según sea necesario
+            [
+                'nombre' => 'Peso muerto',
+                'descripcion' => 'Ejercicio compuesto que trabaja la parte posterior del cuerpo, incluyendo la espalda baja, glúteos, isquiotibiales y músculos de la cadena posterior.',
+                'foto' => 'peso_muerto.jpg',
+                'grupos_musculares' => 'Espalda baja, glúteos, isquiotibiales'
+            ],
+            [
+                'nombre' => 'Fondos en paralelas',
+                'descripcion' => 'Ejercicio para el tren superior que trabaja principalmente los músculos del tríceps, pero también involucra los hombros y el pecho.',
+                'foto' => 'fondos_paralelas.jpg',
+                'grupos_musculares' => 'Tríceps, hombros, pecho'
+            ],
+            [
+                'nombre' => 'Remo con barra',
+                'descripcion' => 'Ejercicio para la espalda que trabaja los músculos de la espalda, incluyendo los dorsales, trapecios y romboides.',
+                'foto' => 'remo_barra.jpg',
+                'grupos_musculares' => 'Dorsales, trapecios, romboides'
+            ],
+            [
+                'nombre' => 'Flexiones de brazos',
+                'descripcion' => 'Ejercicio para el pecho, hombros y tríceps. Realiza flexiones con el cuerpo recto y los brazos extendidos.',
+                'foto' => 'flexiones_brazos.jpg',
+                'grupos_musculares' => 'Pecho, hombros, tríceps'
+            ],
+            [
+                'nombre' => 'Zancadas',
+                'descripcion' => 'Ejercicio para piernas y glúteos. Da un paso adelante y flexiona ambas rodillas hasta que formen un ángulo de 90 grados.',
+                'foto' => 'zancadas.jpg',
+                'grupos_musculares' => 'Piernas, glúteos'
+            ],
+            [
+                'nombre' => 'Elevaciones laterales',
+                'descripcion' => 'Ejercicio para los hombros. Levanta mancuernas hacia los lados hasta que los brazos estén paralelos al suelo.',
+                'foto' => 'elevaciones_laterales.jpg',
+                'grupos_musculares' => 'Hombros'
+            ]
         ];
         
         // Seed con los ejercicios

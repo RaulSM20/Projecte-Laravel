@@ -51,12 +51,13 @@ class EjercicioController extends Controller
         return $ejercicio;
     }
 
-    /**
+     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $ejercicio = Ejercicio::find($id);
+        return view("editarEjercicios", ['ejercicio' => $ejercicio]);
     }
 
     /**
@@ -64,7 +65,18 @@ class EjercicioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $ejercicio = Ejercicio::find($id);
+        $ejercicio->nombre = $request->nombre;
+        $ejercicio->descripcion = $request->descripcion;
+        $ejercicio->grupos_musculares = $request->grupos;
+        // Si se proporciona una nueva imagen, actualiza la foto
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('rutinas', 'public');
+            $ejercicio->foto = 'storage/' . $imagenPath;
+        }
+        $ejercicio->save();
+        return redirect('dashboard/ejercicios');
     }
 
     /**
@@ -72,6 +84,9 @@ class EjercicioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ejercicio = Ejercicio::findOrFail($id);
+        $ejercicio->delete();
+
+        return redirect('/dashboard/ejercicios');
     }
 }

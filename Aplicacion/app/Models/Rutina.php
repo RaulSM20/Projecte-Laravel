@@ -15,4 +15,19 @@ class Rutina extends Model
         'foto',
         'nivel_dificultad',
     ];
+    public function ejercicios()
+    {
+        return $this->belongsToMany(Ejercicio::class, 'rutina_ejercicio')
+            ->withPivot(['numero_series', 'numero_repeticiones', 'rir']);
+    }
+
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'entrenamiento_rutina');
+    }
+    public function usuarios_rutina()
+    {
+        return $this->belongsToMany(User::class, 'usuario_rutina');
+    }
 }

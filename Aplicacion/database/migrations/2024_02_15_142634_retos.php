@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('retos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->nullable();
             $table->string('titulo');
             $table->string('descripcion');
             $table->date('fecha_inicio');

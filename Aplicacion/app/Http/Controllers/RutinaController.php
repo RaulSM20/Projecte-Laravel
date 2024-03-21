@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ejercicio;
 use App\Models\Rutina;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RutinaController extends Controller
 {
@@ -12,7 +14,6 @@ class RutinaController extends Controller
      */
     public function index()
     {
-        //
         $rutinas = Rutina::all();
 
         return view('mostrarRutinas', ['rutinas' => $rutinas]);
@@ -35,8 +36,12 @@ class RutinaController extends Controller
         $rutina->nombre = $request->nombre;
         $rutina->descripcion = $request->descripcion;
         $rutina->nivel_dificultad = $request->dificultad;
-        $path = $request->file('imagen')->store('rutinas', 'public');
-        $rutina->foto = 'storage/'.$path;
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('rutinas', 'public');
+            $rutina->foto = 'storage/' . $path;
+        } else {
+            $rutina->foto = 'NO IMAGEN';
+        }
         $rutina->save();
 
         return view('/dashboard');
@@ -48,7 +53,7 @@ class RutinaController extends Controller
     public function show(Rutina $rutina)
     {
 
-       return $rutina;
+        return $rutina;
     }
 
     /**
@@ -56,7 +61,8 @@ class RutinaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $rutina = Rutina::find($id);
+        return view("editarRutina", ['rutina' => $rutina]);
     }
 
     /**
@@ -64,7 +70,18 @@ class RutinaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $rutina = Rutina::find($id);
+        $rutina->nombre = $request->nombre;
+        $rutina->descripcion = $request->descripcion;
+        $rutina->nivel_dificultad = $request->dificultad;
+        // Si se proporciona una nueva imagen, actualiza la foto
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('rutinas', 'public');
+            $rutina->foto = 'storage/' . $imagenPath;
+        }
+        $rutina->save();
+        return redirect('dashboard/rutinas');
     }
 
     /**
@@ -72,6 +89,59 @@ class RutinaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $rutina = Rutina::findOrFail($id);
+        $rutina->delete();
+
+        return redirect('/dashboard/rutinas');
+    }
+
+    public function agregarEjercicios()
+    {
+
+        $rutinas = Rutina::all();
+        $ejercicios = Ejercicio::all();
+        return view('agregar_ejercicios_a_rutina', ['rutinas' => $rutinas, 'ejercicios' => $ejercicios]);
+    }
+
+    public function agregarEjercicio(Request $request)
+    {
+        // Validar los datos del formulario
+        // $request->validate([
+        //     'rutina' => 'required|exists:rutinas,id',
+        //     'ejercicio' => 'required|exists:ejercicios,id',
+        //     'numero_series' => 'required|integer|min:1',
+        //     'numero_repeticiones' => 'required|integer|min:1',
+        //     'rir' => 'required|integer|min:0',
+        // ]);
+
+        // Obtener los datos del formulario
+        $rutinaId = $request->rutina;
+        $ejercicioId = $request->ejercicio;
+        $numeroSeries = $request->series;
+        $numeroRepeticiones = $request->repeticiones;
+        $rir = $request->rir;
+
+        $rutina = Rutina::findOrFail($rutinaId);
+        $ejercicio = Ejercicio::findOrFail($ejercicioId);
+
+        // Agregar el ejercicio a la rutina
+        $rutina->ejercicios()->attach($ejercicio, [
+            'numero_series' => $numeroSeries,
+            'numero_repeticiones' => $numeroRepeticiones,
+            'rir' => $rir,
+        ]);
+
+        return redirect()->back()->with('success', 'Ejercicio agregado a la rutina exitosamente.');
+    }
+
+    public function asignarRutina($id)
+    {
+        $usuario = Auth::user(); 
+        $rutina = Rutina::findOrFail($id);
+
+        // Asignar la rutina al usuario
+        $usuario->rutina()->sync([$rutina->id]);
+
+        return back();
     }
 }

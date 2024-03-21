@@ -15,15 +15,21 @@ class Entrenamiento extends Model
         'fecha',
     ];
 
-    
+
     public function rutina()
     {
         return $this->belongsTo(Rutina::class);
     }
 
-    
     public function usuario()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function ejercicios()
+    {
+        return $this->belongsToMany(Ejercicio::class, 'ejercicio_entrenamiento')
+            ->withPivot(['numero_series', 'numero_repeticiones', 'rir'])
+            ->withTimestamps();
     }
 }

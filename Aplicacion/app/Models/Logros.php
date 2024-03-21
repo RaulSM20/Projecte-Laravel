@@ -12,6 +12,7 @@ class Logros extends Model
     
     protected $fillable = [
         'user_id',
+        'nombre',
         'descripcion',
         'fecha',
     ];

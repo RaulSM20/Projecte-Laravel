@@ -15,4 +15,16 @@ class Ejercicio extends Model
         'foto',
         'grupos_musculares',
     ];
+
+   
+    public function rutinas()
+    {
+        return $this->belongsToMany(Rutina::class, 'rutina_ejercicio');
+    }
+    
+    public function entrenamientos()
+    {
+        return $this->belongsToMany(Entrenamiento::class, 'ejercicio_entrenamiento');
+    }
+    
 }

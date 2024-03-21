@@ -49,27 +49,25 @@ class User extends Authenticatable
         return $this->hasMany(Entrenamiento::class);
     }
 
-    /**
-     * Get the medidas for the user.
-     */
+
     public function medidas()
     {
         return $this->hasMany(Medidas::class);
     }
 
-    /**
-     * Get the logros for the user.
-     */
+
     public function logros()
     {
         return $this->hasMany(Logros::class);
     }
 
-    /**
-     * Get the retos that the user participates in.
-     */
+
     public function retos()
     {
         return $this->belongsToMany(Retos::class);
+    }
+    public function rutina()
+    {
+        return $this->belongsToMany(Rutina::class, 'usuario_rutina');
     }
 }
