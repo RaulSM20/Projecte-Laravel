@@ -67,6 +67,7 @@
    </header>
    
    <body>
+    <livewire:toasts />
       @yield('content')
    </body>
 

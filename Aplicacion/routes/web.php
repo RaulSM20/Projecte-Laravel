@@ -69,4 +69,4 @@ Route::middleware('auth')->post('/rutinas/{id}/asignar', [RutinaController::clas
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth.php'; 

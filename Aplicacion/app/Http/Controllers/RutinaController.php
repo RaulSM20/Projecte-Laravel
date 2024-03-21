@@ -44,6 +44,8 @@ class RutinaController extends Controller
         }
         $rutina->save();
 
+        
+
         return view('/dashboard');
     }
 
@@ -97,7 +99,6 @@ class RutinaController extends Controller
 
     public function agregarEjercicios()
     {
-
         $rutinas = Rutina::all();
         $ejercicios = Ejercicio::all();
         return view('agregar_ejercicios_a_rutina', ['rutinas' => $rutinas, 'ejercicios' => $ejercicios]);
@@ -105,15 +106,6 @@ class RutinaController extends Controller
 
     public function agregarEjercicio(Request $request)
     {
-        // Validar los datos del formulario
-        // $request->validate([
-        //     'rutina' => 'required|exists:rutinas,id',
-        //     'ejercicio' => 'required|exists:ejercicios,id',
-        //     'numero_series' => 'required|integer|min:1',
-        //     'numero_repeticiones' => 'required|integer|min:1',
-        //     'rir' => 'required|integer|min:0',
-        // ]);
-
         // Obtener los datos del formulario
         $rutinaId = $request->rutina;
         $ejercicioId = $request->ejercicio;
@@ -131,16 +123,24 @@ class RutinaController extends Controller
             'rir' => $rir,
         ]);
 
+        toast()
+            ->success('Ejercicio añadido')
+            ->pushOnNextPage();
+
         return redirect()->back()->with('success', 'Ejercicio agregado a la rutina exitosamente.');
     }
 
     public function asignarRutina($id)
     {
-        $usuario = Auth::user(); 
+        $usuario = Auth::user();
         $rutina = Rutina::findOrFail($id);
 
         // Asignar la rutina al usuario
         $usuario->rutina()->sync([$rutina->id]);
+
+        toast()
+            ->success('Rutina añadida')
+            ->pushOnNextPage();
 
         return back();
     }

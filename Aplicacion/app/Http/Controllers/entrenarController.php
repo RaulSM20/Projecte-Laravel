@@ -13,7 +13,7 @@ class entrenarController extends Controller
 {
     $usuario = Auth::user();
     $rutinaAsignada = $usuario->rutina->first();
-    $rutinas = Rutina::all(); // Obtener todas las rutinas disponibles
+    $rutinas = Rutina::all();
     return view('Front Page.entrenar', compact('rutinaAsignada', 'rutinas'));
 }
 
